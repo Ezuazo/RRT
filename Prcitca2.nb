@@ -1,0 +1,478 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     18292,        468]
+NotebookOptionsPosition[     16470,        420]
+NotebookOutlinePosition[     16803,        435]
+CellTagsIndexPosition[     16760,        432]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Clear", "[", "\"\<Global`*\>\"", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"<<", 
+  "\"\</home/docencia/Downloads/RRT-caso1_MM1/RandomData.m\>\""}], "\
+\[IndentingNewLine]", 
+ RowBox[{"<<", 
+  "\"\</home/docencia/Downloads/RRT-caso2_ARQ/drawTx.m\>\""}]}], "Input",
+ CellChangeTimes->{{3.718456105418851*^9, 
+  3.718456113451058*^9}},ExpressionUUID->"1d82e518-d45c-41a2-b50a-\
+c13068fc0c91"],
+
+Cell["\<\
+Mi paquete sera: \
+{tiempo_llegada,tasa_servicio,n\[UAcute]mero_sec,error,num_rep}
+Tasa de servicio 9600 --> un segundo
+Modulo de DrawWin es ancho de la ventana, hasta que numero cuenta.\
+\>", "Text",
+ CellChangeTimes->{{3.718456245552898*^9, 3.718456252159336*^9}, {
+  3.718456323012437*^9, 3.7184563346275797`*^9}, {3.7184565741755466`*^9, 
+  3.718456608142411*^9}},ExpressionUUID->"cdbf385c-66c4-4aa3-8705-\
+94a1d62df7b6"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"paquete", "=", 
+     RowBox[{"{", 
+      RowBox[{"3", ",", "9600", ",", "0", ",", "0", ",", "0"}], "}"}]}], 
+    ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"SetIniParDraw", "[", 
+     RowBox[{"7", ",", "1"}], "]"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"Show", "[", 
+    RowBox[{
+     RowBox[{"DrawWin", "[", 
+      RowBox[{"0", ",", "30", ",", "5"}], "]"}], ",", " ", 
+     RowBox[{"DrawPacketTx", "[", "paquete", "]"}]}], "]"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.718456256458723*^9, 3.718456337764204*^9}, {
+  3.718456383731152*^9, 3.718456528640972*^9}, {3.718456570417097*^9, 
+  3.718456572128065*^9}},ExpressionUUID->"f7338ec0-9369-46c0-993b-\
+34b1115c73c0"],
+
+Cell[BoxData[
+ GraphicsBox[{
+   {GrayLevel[0], LineBox[{{0, 0}, {30, 0}}], 
+    LineBox[NCache[{{0, Rational[15, 2]}, {30, Rational[15, 2]}}, {{0, 7.5}, {
+       30, 7.5}}]]}, 
+   {RGBColor[1, 0.5, 0.5], EdgeForm[Thickness[Tiny]], 
+    RectangleBox[{3, 0}, {4, -0.75}], 
+    {Dashing[{Small, Small}], 
+     LineBox[NCache[{{3, 0}, {10, Rational[15, 2]}}, {{3, 0}, {10, 7.5}}]], 
+     LineBox[NCache[{{4, 0}, {11, Rational[15, 2]}}, {{4, 0}, {11, 7.5}}]], 
+     {RGBColor[1, 0.5, 0.5], EdgeForm[Thickness[Tiny]], 
+      RectangleBox[NCache[{11, Rational[15, 2]}, {11, 7.5}], {12, 8.25}], 
+      {GrayLevel[0], Dashing[{Small, Small}], 
+       LineBox[NCache[{{11, Rational[15, 2]}, {18, 0}}, {{11, 7.5}, {18, 
+          0}}]], LineBox[
+        NCache[{{12, Rational[15, 2]}, {19, 0}}, {{12, 7.5}, {19, 0}}]], 
+       InsetBox["\<\"0\"\>", NCache[{7, Rational[15, 4]}, {7, 3.75}]]}}}}},
+  AspectRatio->Automatic,
+  Axes->{True, False},
+  AxesOrigin->Automatic]], "Output",
+ CellChangeTimes->{{3.718456468521133*^9, 3.7184565324463663`*^9}, 
+   3.718456647301795*^9},ExpressionUUID->"0c07288a-3151-4564-9a40-\
+84bc8dcc8068"]
+}, Open  ]],
+
+Cell["Stop and Wait habiendo siempre un paquete para entrar.", "Text",
+ CellChangeTimes->{{3.718457089559002*^9, 3.718457111525393*^9}, {
+  3.7184579383716173`*^9, 
+  3.718457940835691*^9}},ExpressionUUID->"03fddc85-150e-4c1d-930f-\
+45bcaed5e572"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"transtime", "=", "3"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"servicetime", "=", "1"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"longpack", "=", "19200"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"listadepaquetes", " ", "=", " ", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"n", "*", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", "*", "transtime"}], "+", 
+          RowBox[{"longpack", "/", "9600"}], "+", "servicetime"}], ")"}]}], 
+       ",", "longpack", ",", "n", ",", "0", ",", "0"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"n", ",", "0", ",", "14"}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SetIniParDraw", "[", 
+   RowBox[{"transtime", ",", "servicetime"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Show", "[", 
+    RowBox[{
+     RowBox[{"DrawWin", "[", 
+      RowBox[{"origin", ",", "ww", ",", "15"}], "]"}], ",", 
+     RowBox[{"Map", "[", " ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"DrawPacketTx", "[", "#", "]"}], "&"}], ",", 
+       "listadepaquetes"}], "]"}]}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"origin", " ", ",", "0", " ", ",", 
+     RowBox[{"150", "-", "ww"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"ww", ",", "10", ",", "50"}], "}"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.718456699444768*^9, 3.718456766043919*^9}, {
+  3.7184568880415497`*^9, 3.7184569573530283`*^9}, {3.7184569901046047`*^9, 
+  3.7184570125515823`*^9}, {3.718457324801491*^9, 3.718457453246209*^9}, {
+  3.71845757682823*^9, 3.7184577584889603`*^9}, {3.718457802711513*^9, 
+  3.7184578453499928`*^9}},ExpressionUUID->"3a167e3f-5cb0-4132-aa8a-\
+355b038781bd"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`origin$$ = 0., $CellContext`ww$$ = 50., 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`origin$$], 0, 
+      Dynamic[150 - $CellContext`ww$$]}, {
+      Hold[$CellContext`ww$$], 10, 50}}, Typeset`size$$ = {360., {58., 61.}}, 
+    Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    True, $CellContext`origin$78969$$ = 0, $CellContext`ww$78970$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`origin$$ = 0, $CellContext`ww$$ = 10}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`origin$$, $CellContext`origin$78969$$, 0], 
+        Hold[$CellContext`ww$$, $CellContext`ww$78970$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> Show[
+        drawTx`DrawWin[$CellContext`origin$$, $CellContext`ww$$, 15], 
+        Map[drawTx`DrawPacketTx[#]& , $CellContext`listadepaquetes]], 
+      "Specifications" :> {{$CellContext`origin$$, 0, 
+         Dynamic[150 - $CellContext`ww$$]}, {$CellContext`ww$$, 10, 50}}, 
+      "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{407., {115., 120.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.718457441672679*^9, 3.718457454070327*^9}, {
+  3.718457625195157*^9, 3.718457702253721*^9}, {3.718457734971303*^9, 
+  3.718457759446951*^9}, {3.718457825952278*^9, 
+  3.718457847783957*^9}},ExpressionUUID->"b7190459-396c-402e-b5a0-\
+d7a277377bfc"]
+}, Open  ]],
+
+Cell["\<\
+Stop and Wait pero con tasas de llegada y servicio
+\
+\>", "Text",
+ CellChangeTimes->{{3.718458267782467*^9, 
+  3.718458280044821*^9}},ExpressionUUID->"5f0648f9-c345-4c4e-af01-\
+859e205badda"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"GetInTime", "[", 
+    RowBox[{"arriv_", ",", "serv_", ",", "prop_", ",", "ack_"}], "]"}], ":=", 
+   " ", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"i", ",", "intime"}], "}"}], ",", 
+     RowBox[{
+      RowBox[{"i", "=", "0"}], ";", 
+      RowBox[{"intime", "=", 
+       RowBox[{"{", 
+        RowBox[{"arriv", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], "}"}]}], ";", 
+      RowBox[{"For", "[", 
+       RowBox[{
+        RowBox[{"i", "=", "2"}], ",", " ", 
+        RowBox[{"i", "<", 
+         RowBox[{"Length", "[", "arriv", "]"}]}], ",", 
+        RowBox[{
+         RowBox[{"i", "++"}], ";", 
+         RowBox[{"intime", "=", 
+          RowBox[{"Join", "[", 
+           RowBox[{"intime", ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"intime", "[", 
+               RowBox[{"[", 
+                RowBox[{"i", "-", "1"}], "]"}], "]"}], "+", 
+              RowBox[{
+               RowBox[{"serv", "[", 
+                RowBox[{"[", 
+                 RowBox[{"i", "-", "1"}], "]"}], "]"}], "*", "9600"}], "+", 
+              RowBox[{"prop", "*", "2"}], "+", "ack"}], "}"}]}], "]"}]}]}]}], 
+       "]"}], ";", 
+      RowBox[{"Return", "[", "intime", "]"}]}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CreaPaquetes", "[", 
+    RowBox[{"intime_", ",", "serv_", ",", "num_"}], "]"}], ":=", " ", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"i", ",", "listapaq", ",", "n"}], "}"}], ",", 
+     RowBox[{
+      RowBox[{"n", "=", "0"}], ";", 
+      RowBox[{"For", "[", 
+       RowBox[{
+        RowBox[{"i", "=", "1"}], ",", " ", 
+        RowBox[{"i", "<", 
+         RowBox[{"Length", "[", "intime", "]"}]}], ",", " ", 
+        RowBox[{
+         RowBox[{"i", "++"}], ";", 
+         RowBox[{"listapaq", "=", 
+          RowBox[{"Join", "[", 
+           RowBox[{"listapaq", ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"intime", "[", 
+               RowBox[{"[", "i", "]"}], "]"}], ",", 
+              RowBox[{"serv", "[", 
+               RowBox[{"[", "i", "]"}], "]"}], ",", "n", ",", "0", ",", "0"}],
+              "}"}]}], "]"}]}], ";", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"n", "\[Equal]", 
+            RowBox[{"num", "-", "1"}]}], ",", 
+           RowBox[{"n", "=", "0"}], ",", 
+           RowBox[{"n", "++"}]}], "]"}], ";"}]}], "]"}], ";", 
+      RowBox[{"Return", "[", "listapaq", "]"}]}]}], "]"}]}], ";"}]}], "Input",\
+
+ CellChangeTimes->{{3.718458398726181*^9, 3.7184586557828693`*^9}, {
+   3.718458692119027*^9, 3.71845872923814*^9}, {3.718458866755509*^9, 
+   3.7184588812664137`*^9}, {3.71845896689738*^9, 3.7184592399444532`*^9}, {
+   3.7184596240896873`*^9, 3.718459632680435*^9}, {3.718459830005165*^9, 
+   3.71845983243526*^9}, {3.718459884369937*^9, 3.7184598950569487`*^9}, {
+   3.718460504273115*^9, 3.718460527552226*^9}, {3.718460562272129*^9, 
+   3.718460583966683*^9}, 3.718460666235786*^9, {3.7184607106850452`*^9, 
+   3.718460712955983*^9}, {3.7184608027935247`*^9, 3.718460864855229*^9}, {
+   3.7184609745839977`*^9, 3.718461005476693*^9}, {3.71846111086679*^9, 
+   3.71846113689904*^9}},ExpressionUUID->"94374803-f727-4078-a17a-\
+5f29ba0751e1"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"lamda", "=", "90"}], ";", " ", 
+  RowBox[{"mu", "=", "100"}], ";", " ", 
+  RowBox[{"numPaquetes", "=", "25"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"InterArrivalsTime", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"RandomExp", "[", "lamda", "]"}], ",", "numPaquetes"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ArrivalsTime", "=", 
+   RowBox[{"Accumulate", "[", "InterArrivalsTime", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ServTime", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"RandomExp", "[", "mu", "]"}], ",", "numPaquetes"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"prop", "=", "0.05"}], ";", 
+  RowBox[{"ack", "=", "0.004"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"insertions", "=", 
+  RowBox[{"GetInTime", "[", 
+   RowBox[{"ArrivalsTime", ",", "ServTime", ",", "prop", ",", "ack"}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"paquetes", "=", 
+   RowBox[{"CreaPaquetes", "[", 
+    RowBox[{"insertions", ",", "ServTime", ",", "8"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SetIniParDraw", "[", 
+   RowBox[{"prop", ",", "ack"}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.7184582837697773`*^9, 3.718458318588913*^9}, {
+   3.718459262903469*^9, 3.71845932291539*^9}, {3.718459692024362*^9, 
+   3.7184596937499723`*^9}, {3.718460768890299*^9, 3.718460776073291*^9}, {
+   3.7184608927588263`*^9, 3.718460925269238*^9}, 
+   3.718461046260481*^9},ExpressionUUID->"4ed23479-5bb2-4c5b-9b18-\
+87385bd87892"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Part","partw",
+   "\"Part \\!\\(\\*RowBox[{\\\"2\\\"}]\\) of \\!\\(\\*RowBox[{\\\"{\\\", \
+\\\"0.002265397571128215`\\\", \\\"}\\\"}]\\) does not exist.\"",2,577,161,
+   23129110917824846310,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7184609516887074`*^9, 3.718460982950796*^9, 
+  3.7184610466850853`*^9, 
+  3.7184611415194387`*^9},ExpressionUUID->"127bc7d2-ade2-4357-95a7-\
+18ffeb38a383"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Part","partw",
+   "\"Part \\!\\(\\*RowBox[{\\\"3\\\"}]\\) of \\!\\(\\*RowBox[{\\\"{\\\", \
+RowBox[{\\\"0.002265397571128215`\\\", \\\",\\\", \
+RowBox[{RowBox[{\\\"111.1819015110846`\\\", \\\"\[VeryThinSpace]\\\"}], \\\"+\
+\\\", RowBox[{RowBox[{\\\"{\\\", \\\"0.002265397571128215`\\\", \\\"}\\\"}], \
+\\\"\[LeftDoubleBracket]\\\", \\\"2\\\", \\\"\[RightDoubleBracket]\\\"}]}]}], \
+\\\"}\\\"}]\\) does not exist.\"",2,577,162,23129110917824846310,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7184609516887074`*^9, 3.718460982950796*^9, 
+  3.7184610466850853`*^9, 
+  3.718461141527144*^9},ExpressionUUID->"13223ac5-de19-41bc-939d-\
+c5c202103084"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Part","partw",
+   "\"Part \\!\\(\\*RowBox[{\\\"4\\\"}]\\) of \\!\\(\\*RowBox[{\\\"{\\\", \
+RowBox[{\\\"0.002265397571128215`\\\", \\\",\\\", \
+RowBox[{RowBox[{\\\"111.1819015110846`\\\", \\\"\[VeryThinSpace]\\\"}], \\\"+\
+\\\", RowBox[{RowBox[{\\\"{\\\", \\\"0.002265397571128215`\\\", \\\"}\\\"}], \
+\\\"\[LeftDoubleBracket]\\\", \\\"2\\\", \\\"\[RightDoubleBracket]\\\"}]}], \
+\\\",\\\", RowBox[{RowBox[{\\\"29.901210539283888`\\\", \
+\\\"\[VeryThinSpace]\\\"}], \\\"+\\\", RowBox[{RowBox[{\\\"{\\\", \
+RowBox[{\\\"0.002265397571128215`\\\", \\\",\\\", \
+RowBox[{RowBox[{\\\"111.1819015110846`\\\", \\\"\[VeryThinSpace]\\\"}], \\\"+\
+\\\", RowBox[{RowBox[{\\\"{\\\", \\\"0.002265397571128215`\\\", \\\"}\\\"}], \
+\\\"\[LeftDoubleBracket]\\\", \\\"2\\\", \\\"\[RightDoubleBracket]\\\"}]}]}], \
+\\\"}\\\"}], \\\"\[LeftDoubleBracket]\\\", \\\"3\\\", \\\"\
+\[RightDoubleBracket]\\\"}]}]}], \\\"}\\\"}]\\) does not exist.\"",2,577,163,
+   23129110917824846310,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7184609516887074`*^9, 3.718460982950796*^9, 
+  3.7184610466850853`*^9, 
+  3.718461141533875*^9},ExpressionUUID->"de087e33-1a74-40c1-80d3-\
+499c9e90298e"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "General","stop",
+   "\"Further output of \\!\\(\\*StyleBox[RowBox[{\\\"Part\\\", \\\"::\\\", \
+\\\"partw\\\"}], \\\"MessageName\\\"]\\) will be suppressed during this \
+calculation.\"",2,577,164,23129110917824846310,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7184609516887074`*^9, 3.718460982950796*^9, 
+  3.7184610466850853`*^9, 
+  3.7184611415407963`*^9},ExpressionUUID->"a9a73707-b4b4-4f03-b926-\
+ccab2a685df1"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Show", "[", 
+    RowBox[{
+     RowBox[{"DrawWin", "[", 
+      RowBox[{"origin", ",", "ww", ",", "8"}], "]"}], ",", 
+     RowBox[{"Map", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"DrawPacketTx", "[", "#", "]"}], "&"}], ",", "paquetes"}], 
+      "]"}]}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"origin", ",", "0", ",", 
+     RowBox[{"1", "-", "ww"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"ww", ",", "0.01", ",", "0.2"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.718459386434412*^9, 3.718459420816821*^9}, 
+   3.7184594664800777`*^9, {3.718459499469901*^9, 3.718459513356627*^9}, 
+   3.718459570619335*^9},ExpressionUUID->"a81adb3e-2fff-4426-9c1d-\
+898245c8b90f"]
+},
+WindowSize->{608, 972},
+WindowMargins->{{Automatic, 0}, {0, Automatic}},
+FrontEndVersion->"11.1 for Linux x86 (64-bit) (April 18, 2017)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 434, 11, 80, "Input", "ExpressionUUID" -> \
+"1d82e518-d45c-41a2-b50a-c13068fc0c91"],
+Cell[995, 33, 435, 9, 121, "Text", "ExpressionUUID" -> \
+"cdbf385c-66c4-4aa3-8705-94a1d62df7b6"],
+Cell[CellGroupData[{
+Cell[1455, 46, 815, 20, 146, "Input", "ExpressionUUID" -> \
+"f7338ec0-9369-46c0-993b-34b1115c73c0"],
+Cell[2273, 68, 1121, 22, 134, "Output", "ExpressionUUID" -> \
+"0c07288a-3151-4564-9a40-84bc8dcc8068"]
+}, Open  ]],
+Cell[3409, 93, 247, 4, 33, "Text", "ExpressionUUID" -> \
+"03fddc85-150e-4c1d-930f-45bcaed5e572"],
+Cell[CellGroupData[{
+Cell[3681, 101, 1797, 47, 240, "Input", "ExpressionUUID" -> \
+"3a167e3f-5cb0-4132-aa8a-355b038781bd"],
+Cell[5481, 150, 2231, 43, 252, "Output", "ExpressionUUID" -> \
+"b7190459-396c-402e-b5a0-d7a277377bfc"]
+}, Open  ]],
+Cell[7727, 196, 201, 6, 55, "Text", "ExpressionUUID" -> \
+"5f0648f9-c345-4c4e-af01-859e205badda"],
+Cell[7931, 204, 3291, 84, 333, "Input", "ExpressionUUID" -> \
+"94374803-f727-4078-a17a-5f29ba0751e1"],
+Cell[CellGroupData[{
+Cell[11247, 292, 1596, 41, 195, "Input", "ExpressionUUID" -> \
+"4ed23479-5bb2-4c5b-9b18-87385bd87892"],
+Cell[12846, 335, 450, 10, 23, "Message", "ExpressionUUID" -> \
+"127bc7d2-ade2-4357-95a7-18ffeb38a383"],
+Cell[13299, 347, 703, 13, 27, "Message", "ExpressionUUID" -> \
+"13223ac5-de19-41bc-939d-c5c202103084"],
+Cell[14005, 362, 1214, 21, 49, "Message", "ExpressionUUID" -> \
+"de087e33-1a74-40c1-80d3-499c9e90298e"],
+Cell[15222, 385, 475, 10, 40, "Message", "ExpressionUUID" -> \
+"a9a73707-b4b4-4f03-b926-ccab2a685df1"]
+}, Open  ]],
+Cell[15712, 398, 754, 20, 80, "Input", "ExpressionUUID" -> \
+"a81adb3e-2fff-4426-9c1d-898245c8b90f"]
+}
+]
+*)
+
+(* End of internal cache information *)
+
